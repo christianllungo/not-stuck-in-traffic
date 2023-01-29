@@ -1,13 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Not Stuck In Traffic</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Pontano+Sans&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <div id="app"></div>
     <script src="./src/App.js"></script>
 </body>
+
 </html>
+
+<style>
+    * {
+        font-family: 'Pontano Sans', sans-serif;
+        font-size: 14px;
+    }
+
+    .main-title {
+        text-align: center;
+        font-family: 'Audiowide', cursive;
+        font-size: 24px;
+    }
+
+    .main-content {
+        display: flex;
+        justify-content: space-around;
+        max-width: 500px;
+        margin: auto;
+    }
+
+    .signature-box {
+        background-color: #F8F8FF;
+        padding: 10px;
+        width: 114px;
+    }
+
+    .signature-box-big {
+        background-color: #F8F8FF;
+        padding: 10px;
+    }
+
+    .primary-button {
+        background-color: #7389F4;
+        color: white;
+        border: none;
+        width: 100%;
+        padding: 10px 5px;
+        border-radius: 50px;
+        margin: 10px 0;
+    }
+
+    .primary-box {
+        background-color: #7389F4;
+        color: white;
+        padding: 11px 5px;
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    .roll-result {
+        text-align: center;
+        margin: 15px 0;
+    }
+
+    .main-h2 {
+        font-size: 20px;
+        text-align: center;
+        margin: 3rem 0 1rem;
+    }
+
+    .section-subtitle {
+        margin: 3rem 0 1rem;
+        font-size: 16px;
+    }
+
+
+    .cell {
+        border: 1px solid #555;
+        width: 42px;
+        height: 32px;
+        text-align: center;
+    }
+
+    .main-table {
+        border-spacing: 1px;
+    }
+
+    .main-table tbody tr:nth-child(1),
+    .main-table tbody tr:nth-child(2) {
+        background-color: lightgray;
+    }
+
+    .main-table tbody tr:nth-child(13) {
+        background-color: darkgray;
+    }
+
+
+    #player-choose {
+        margin: auto;
+    }
+
+    .main-hr {
+        margin: 20px auto;
+        max-width: 360px;
+    }
+
+    .section-text {
+        width: 300px;
+        margin: 30px auto;
+    }
+</style>
