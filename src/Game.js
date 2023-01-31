@@ -28,10 +28,10 @@ export const NotStuckInTraffic = {
 
     turn: {
         minMoves: 1,
-        onEnd: UpdateRedLights,
+        onEnd: onTurnEnd,
     },
 
-    moves: { RollDice, TryMove, ChooseCell, PlaceRedLight },
+    moves: { rollDice, tryMove },
 
     endIf: ({ G, ctx }) => {
         if (isVictory(G, ctx)) {
@@ -41,7 +41,7 @@ export const NotStuckInTraffic = {
 };
 
 // moves
-function RollDice({G, ctx, random, events}) {
+function rollDice({G, ctx, random, events}) {
     if (!G.isRolled) {
         const moveCode = random.Die(5);
         G.currentRoll = moveCode;
@@ -69,15 +69,15 @@ function RollDice({G, ctx, random, events}) {
     }
 }
 
-function TryMove({G, ctx, events}, id) {
+function tryMove({G, ctx, events}, id) {
     if (G.currentRoll == 2 || G.currentRoll == 3 || G.currentRoll == 4) {
-        ChooseCell(G, ctx, events, id);
+        chooseCell(G, ctx, events, id);
     } else if (G.currentRoll == 5) {
-        PlaceRedLight(G, ctx, events, id);
+        placeRedLight(G, ctx, events, id);
     }
 }
 
-function ChooseCell(G, ctx, events, id) {
+function chooseCell(G, ctx, events, id) {
     G.cellsAllowed.forEach(e => {
         if (id == e) {
             if (G.cells[id] !== null) {
@@ -91,7 +91,7 @@ function ChooseCell(G, ctx, events, id) {
     });
 }
 
-function PlaceRedLight(G, ctx, events, id) {
+function placeRedLight(G, ctx, events, id) {
     if (G.cells[id] !== null || id == 0 || id == 1 || id == 2 || id == 3 || id == 44 || id == 45 || id == 46 || id == 47 || id == 48 || id == 49 || id == 50 || id == 51) {
         return INVALID_MOVE;
     }
@@ -205,8 +205,8 @@ function repaintCells(G) {
     }
 }
 
-// moves: onEnd
-function UpdateRedLights({G, ctx}) {
+// moves: onEnd UpdateRedLights
+function onTurnEnd({G, ctx}) {
     for (let i = 0; i < G.redLights.length; i++) {
         const redLight = G.redLights[i];
         if (redLight.placedBy == ctx.currentPlayer) {

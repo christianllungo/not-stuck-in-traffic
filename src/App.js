@@ -52,7 +52,7 @@ class NotStuckInTrafficClient {
         // `data-id` attribute and make the `clickCell` move
         const handleCellClick = event => {
             const id = parseInt(event.target.dataset.id);
-            this.client.moves.TryMove(id);
+            this.client.moves.tryMove(id);
         };
         // Attach the event listener to each of the board cells
         const cells = this.rootElement.querySelectorAll('.cell');
@@ -62,7 +62,7 @@ class NotStuckInTrafficClient {
 
         // This event handler will make the `rollDice` move
         const handleRollDice = event => {
-            this.client.moves.RollDice();
+            this.client.moves.rollDice();
         };
         // Attach the event listener to the dice button
         const rollDiceButton = this.rootElement.querySelector('.roll-dice');
