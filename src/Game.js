@@ -41,7 +41,7 @@ export const NotStuckInTraffic = {
 };
 
 // moves
-function rollDice({G, ctx, random, events}) {
+function rollDice({ G, ctx, random, events }) {
     if (!G.isRolled) {
         const moveCode = random.Die(5);
         G.currentRoll = moveCode;
@@ -69,7 +69,7 @@ function rollDice({G, ctx, random, events}) {
     }
 }
 
-function tryMove({G, ctx, events}, id) {
+function tryMove({ G, ctx, events }, id) {
     if (G.currentRoll == 2 || G.currentRoll == 3 || G.currentRoll == 4) {
         chooseCell(G, ctx, events, id);
     } else if (G.currentRoll == 5) {
@@ -205,8 +205,14 @@ function repaintCells(G) {
     }
 }
 
-// moves: onEnd UpdateRedLights
-function onTurnEnd({G, ctx}) {
+// moves: onEnd
+function onTurnEnd({ G, ctx }) {
+    updateRedLights(G, ctx);
+    G.isRolled = false;
+    G.totalMoves = G.totalMoves + 1;
+}
+
+function updateRedLights(G, ctx) {
     for (let i = 0; i < G.redLights.length; i++) {
         const redLight = G.redLights[i];
         if (redLight.placedBy == ctx.currentPlayer) {
@@ -217,8 +223,6 @@ function onTurnEnd({G, ctx}) {
             repaintCells(G);
         }
     }
-    G.isRolled = false;
-    G.totalMoves = G.totalMoves + 1;
 }
 
 function isVictory(G, ctx) {
