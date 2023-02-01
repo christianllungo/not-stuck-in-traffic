@@ -1,4 +1,5 @@
 import { INVALID_MOVE } from 'boardgame.io/core';
+import { moveZero, moveOne, moveTwo, moveOneSide } from "./helpers";
 
 export const NotStuckInTraffic = {
     setup: () => {
@@ -104,81 +105,12 @@ function placeRedLight(G, ctx, events, id) {
     events.endTurn();
 }
 
-// helper functions
-
-function moveZero(events) {
-    events.endTurn();
-}
-
-function moveOne(G, ctx, events) {
-    if (isMoveQtyAvailable(G, ctx, 4)) {
-        const allowedPosition = G.currentPlayerPositions[ctx.currentPlayer] + 4;
-        return [allowedPosition];
-    }
-    G.cellsAllowed = [];
-    events.endTurn();
-}
-
-function moveTwo(G, ctx, events) {
-    if (!isMoveQtyAvailable(G, ctx, 4)) {
-        G.cellsAllowed = [];
-        events.endTurn();
-    } else if (!isMoveQtyAvailable(G, ctx, 8)) {
-        const allowedPosition = G.currentPlayerPositions[ctx.currentPlayer] + 4;
-        return [allowedPosition];
-    } else {
-        const allowedPosition = G.currentPlayerPositions[ctx.currentPlayer] + 8;
-        return [allowedPosition];
-    }
-}
-
-// Checks if moving qty spaces from current player is available
-function isMoveQtyAvailable(G, ctx, qty) {
-    const moveTo = G.currentPlayerPositions[ctx.currentPlayer] + qty;
-    if (G.cells[moveTo] !== null) {
-        return false;
-    }
-    return true;
-}
-
-function moveOneSide(G, ctx, events) {
-    const leftSquares = [0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40];
-    const rightSquares = [3, 7, 11, 15, 19, 23, 27, 31, 35, 39, 43];
-    const currentPlayerPosition = G.currentPlayerPositions[ctx.currentPlayer];
-
-    if (leftSquares.includes(currentPlayerPosition)) {
-        if (isMoveQtyAvailable(G, ctx, 5)) {
-            const allowedPosition = G.currentPlayerPositions[ctx.currentPlayer] + 5;
-            return [allowedPosition];
-        }
-        G.cellsAllowed = [];
-        events.endTurn();
-    } else if (rightSquares.includes(currentPlayerPosition)) {
-        if (isMoveQtyAvailable(G, ctx, 3)) {
-            const allowedPosition = G.currentPlayerPositions[ctx.currentPlayer] + 3;
-            return [allowedPosition];
-        }
-        G.cellsAllowed = [];
-        events.endTurn();
-    } else {
-        let allowedPosition = [];
-        if (isMoveQtyAvailable(G, ctx, 3)) {
-            allowedPosition.push(G.currentPlayerPositions[ctx.currentPlayer] + 3);
-        }
-        if (isMoveQtyAvailable(G, ctx, 5)) {
-            allowedPosition.push(G.currentPlayerPositions[ctx.currentPlayer] + 5);
-        }
-        if (allowedPosition.length != 0) {
-            return allowedPosition;
-        } else {
-            G.cellsAllowed = [];
-            events.endTurn();
-        }
-    }
-}
 
 function repaintCells(G) {
+    // Empty board
     G.cells = Array(52).fill(null);
+
+    // Repaint players positions
     const pos0 = G.currentPlayerPositions[0];
     const pos1 = G.currentPlayerPositions[1];
     const pos2 = G.currentPlayerPositions[2];
@@ -188,6 +120,7 @@ function repaintCells(G) {
     G.cells[pos2] = 2;
     G.cells[pos3] = 3;
 
+    // Repaint red lights positions
     for (let i = 0; i < G.redLights.length; i++) {
         const redLight = G.redLights[i];
 
